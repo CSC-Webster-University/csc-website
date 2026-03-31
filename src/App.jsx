@@ -1,35 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { ThemeProvider } from './context/ThemeContext';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import About from './components/About';
+import Tracks from './components/Tracks';
+import CTA from './components/CTA';
+import Footer from './components/Footer';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <ThemeProvider>
+      <div className="bg-background text-on-background selection:bg-primary selection:text-on-primary">
+        <Navbar />
+
+        <main className="pt-24">
+          <Hero />
+          <About />
+          <Tracks />
+
+          {/* Placeholder for Track 2: Events section */}
+          <section id="events" className="py-32 px-8 md:px-16 bg-surface-container-low">
+            <div className="max-w-[1440px] mx-auto">
+              <h2 className="font-headline text-5xl font-black tracking-tighter uppercase mb-4">
+                Event_Log
+              </h2>
+              <p className="mono-data text-sm text-outline mb-16">
+                Syncing from Discord API... // No upcoming events.
+              </p>
+            </div>
+          </section>
+
+          <CTA />
+        </main>
+
+        <Footer />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
