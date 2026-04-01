@@ -88,8 +88,20 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
+section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 body {
@@ -156,4 +168,50 @@ body {
 
 .animate-fade-in-up {
   animation: fade-in-up 0.6s ease-out forwards;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.animate-scanline {
+  animation: scanline 8s linear infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes marquee-y {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+
+.animate-marquee-y {
+  /* We use -50% translation so it requires the content to be duplicated naturally or tall enough to loop seamlessly */
+  animation: marquee-y 30s linear infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); }
+  50% { box-shadow: 0 0 25px rgba(255, 255, 255, 0.8); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-border {
+  0%, 100% { border-color: rgba(255, 255, 255, 0.3); }
+  50% { border-color: rgba(255, 255, 255, 0.8); }
+}
+
+.animate-pulse-border {
+  animation: pulse-border 3s ease-in-out infinite;
 }
