@@ -1,17 +1,18 @@
 import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
+import Hero   from './components/Hero';
+import About  from './components/About';
 import Tracks from './components/Tracks';
-import CTA from './components/CTA';
-import Footer from './components/Footer';
-import CustomCursor from './components/CustomCursor';
+import CTA    from './components/CTA';
 
-function App() {
+/**
+ * Root application component.
+ * Wraps everything in ThemeProvider for dark/light mode support.
+ */
+export default function App() {
   return (
     <ThemeProvider>
       <div className="bg-background text-on-background selection:bg-primary selection:text-on-primary">
-        <CustomCursor />
         <Navbar />
 
         <main className="w-full">
@@ -24,5 +25,3 @@ function App() {
     </ThemeProvider>
   );
 }
-
-export default App;

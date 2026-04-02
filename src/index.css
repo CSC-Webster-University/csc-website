@@ -1,83 +1,134 @@
 @import "tailwindcss";
 
-/* ============================================================
+/* ==========================================================================
    CSC WEBSITE — BRUTALIST TERMINAL DESIGN SYSTEM
-   ============================================================ */
+   ==========================================================================
+   Design tokens, global resets, utility classes, and keyframe animations
+   for the Webster University CS Club website.
+   ========================================================================== */
 
-/* ── Tailwind v4 Theme Tokens ────────────────────────────────── */
+
+/* --------------------------------------------------------------------------
+   1. THEME TOKENS (Tailwind v4 @theme)
+   -------------------------------------------------------------------------- */
 @theme {
   /* Surface palette */
-  --color-surface: #131313;
-  --color-surface-dim: #131313;
-  --color-surface-bright: #393939;
+  --color-surface:                  #131313;
+  --color-surface-dim:              #131313;
+  --color-surface-bright:           #393939;
   --color-surface-container-lowest: #0e0e0e;
-  --color-surface-container-low: #1b1b1b;
-  --color-surface-container: #1f1f1f;
-  --color-surface-container-high: #2a2a2a;
-  --color-surface-container-highest: #353535;
+  --color-surface-container-low:    #1b1b1b;
+  --color-surface-container:        #1f1f1f;
+  --color-surface-container-high:   #2a2a2a;
+  --color-surface-container-highest:#353535;
 
   /* Background */
-  --color-background: #131313;
-  --color-on-background: #e2e2e2;
+  --color-background:       #131313;
+  --color-on-background:    #e2e2e2;
 
   /* Primary */
-  --color-primary: #ffffff;
-  --color-on-primary: #1a1c1c;
-  --color-primary-container: #d4d4d4;
+  --color-primary:              #ffffff;
+  --color-on-primary:           #1a1c1c;
+  --color-primary-container:    #d4d4d4;
   --color-on-primary-container: #000000;
-  --color-inverse-primary: #5d5f5f;
+  --color-inverse-primary:      #5d5f5f;
 
   /* Secondary */
-  --color-secondary: #c6c6c6;
-  --color-on-secondary: #1a1c1c;
-  --color-secondary-container: #454747;
+  --color-secondary:              #c6c6c6;
+  --color-on-secondary:           #1a1c1c;
+  --color-secondary-container:    #454747;
   --color-on-secondary-container: #e2e2e2;
 
   /* Surface text */
-  --color-on-surface: #e2e2e2;
-  --color-on-surface-variant: #c6c6c6;
-  --color-surface-tint: #c6c6c7;
+  --color-on-surface:         #e2e2e2;
+  --color-on-surface-variant:  #c6c6c6;
+  --color-surface-tint:        #c6c6c7;
 
   /* Outline */
-  --color-outline: #919191;
-  --color-outline-variant: #474747;
+  --color-outline:         #919191;
+  --color-outline-variant:  #474747;
 
   /* Inverse */
-  --color-inverse-surface: #e2e2e2;
+  --color-inverse-surface:    #e2e2e2;
   --color-inverse-on-surface: #303030;
 
   /* Error */
-  --color-error: #ffb4ab;
-  --color-on-error: #690005;
-  --color-error-container: #93000a;
+  --color-error:              #ffb4ab;
+  --color-on-error:           #690005;
+  --color-error-container:    #93000a;
   --color-on-error-container: #ffdad6;
 
   /* Tertiary */
-  --color-tertiary: #e3e2e2;
+  --color-tertiary:    #e3e2e2;
   --color-on-tertiary: #1b1c1c;
 
   /* Font families */
   --font-headline: 'Space Grotesk', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
-  --font-label: 'Inter', system-ui, sans-serif;
-  --font-mono: 'Roboto Mono', monospace;
+  --font-body:     'Inter', system-ui, sans-serif;
+  --font-label:    'Inter', system-ui, sans-serif;
+  --font-mono:     'Roboto Mono', monospace;
 
-  /* Border radius — brutalist: 0px everywhere */
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-xl: 0px;
+  /* Border radius — brutalist: 0 everywhere */
+  --radius-sm:  0px;
+  --radius-md:  0px;
+  --radius-lg:  0px;
+  --radius-xl:  0px;
   --radius-2xl: 0px;
   --radius-3xl: 0px;
   --radius-4xl: 0px;
 }
 
-/* ── Material Symbols config ─────────────────────────────────── */
-.material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+
+/* --------------------------------------------------------------------------
+   1b. LIGHT MODE OVERRIDES
+   -------------------------------------------------------------------------- */
+html:not(.dark) {
+  --color-surface:                  #f5f5f5;
+  --color-surface-dim:              #e8e8e8;
+  --color-surface-bright:           #ffffff;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low:    #f0f0f0;
+  --color-surface-container:        #eaeaea;
+  --color-surface-container-high:   #e0e0e0;
+  --color-surface-container-highest:#d6d6d6;
+
+  --color-background:       #f5f5f5;
+  --color-on-background:    #1a1a1a;
+
+  --color-primary:              #111111;
+  --color-on-primary:           #ffffff;
+  --color-primary-container:    #333333;
+  --color-on-primary-container: #ffffff;
+  --color-inverse-primary:      #a0a0a0;
+
+  --color-secondary:              #444444;
+  --color-on-secondary:           #ffffff;
+  --color-secondary-container:    #d0d0d0;
+  --color-on-secondary-container: #1a1a1a;
+
+  --color-on-surface:         #1a1a1a;
+  --color-on-surface-variant:  #555555;
+  --color-surface-tint:        #555555;
+
+  --color-outline:         #888888;
+  --color-outline-variant:  #c0c0c0;
+
+  --color-inverse-surface:    #303030;
+  --color-inverse-on-surface: #f0f0f0;
+
+  --color-error:              #ba1a1a;
+  --color-on-error:           #ffffff;
+  --color-error-container:    #ffdad6;
+  --color-on-error-container: #410002;
+
+  --color-tertiary:    #333333;
+  --color-on-tertiary: #ffffff;
 }
 
-/* ── Global Base ─────────────────────────────────────────────── */
+
+/* --------------------------------------------------------------------------
+   2. GLOBAL RESETS
+   -------------------------------------------------------------------------- */
 *,
 *::before,
 *::after {
@@ -93,10 +144,13 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media (pointer: fine) {
-  * {
-    cursor: none !important;
-  }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-on-background);
+  overflow-x: hidden;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 section {
@@ -104,15 +158,18 @@ section {
   scroll-snap-stop: always;
 }
 
-body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background-color: #131313;
-  color: #e2e2e2;
-  overflow-x: hidden;
-  min-height: 100vh;
+
+/* --------------------------------------------------------------------------
+   3. MATERIAL SYMBOLS
+   -------------------------------------------------------------------------- */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
-/* ── Custom Utility Classes ──────────────────────────────────── */
+
+/* --------------------------------------------------------------------------
+   4. UTILITY CLASSES
+   -------------------------------------------------------------------------- */
 .mono-data {
   font-family: 'Roboto Mono', monospace;
 }
@@ -121,97 +178,106 @@ body {
   background: linear-gradient(135deg, #ffffff 0%, #d4d4d4 100%);
 }
 
+html:not(.dark) .terminal-gradient {
+  background: linear-gradient(135deg, #111111 0%, #333333 100%);
+}
+
 .text-glow {
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
-/* ── Selection Colors ────────────────────────────────────────── */
-::selection {
+html:not(.dark) .text-glow {
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* --------------------------------------------------------------------------
+   5. SELECTION & FOCUS
+   -------------------------------------------------------------------------- */
+.dark ::selection {
   background-color: #ffffff;
   color: #1a1c1c;
 }
 
-/* ── Focus Styles ────────────────────────────────────────────── */
+html:not(.dark) ::selection {
+  background-color: #111111;
+  color: #ffffff;
+}
+
 :focus-visible {
-  outline: 2px solid #ffffff;
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
-/* ── Scrollbar ───────────────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 6px;
-}
 
-::-webkit-scrollbar-track {
-  background: #131313;
-}
+/* --------------------------------------------------------------------------
+   6. SCROLLBAR
+   -------------------------------------------------------------------------- */
+.dark ::-webkit-scrollbar       { width: 6px; }
+.dark ::-webkit-scrollbar-track  { background: #131313; }
+.dark ::-webkit-scrollbar-thumb  { background: #474747; }
+.dark ::-webkit-scrollbar-thumb:hover { background: #919191; }
 
-::-webkit-scrollbar-thumb {
-  background: #474747;
-}
+html:not(.dark) ::-webkit-scrollbar       { width: 6px; }
+html:not(.dark) ::-webkit-scrollbar-track  { background: #f5f5f5; }
+html:not(.dark) ::-webkit-scrollbar-thumb  { background: #c0c0c0; }
+html:not(.dark) ::-webkit-scrollbar-thumb:hover { background: #888888; }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #919191;
-}
 
-/* ── Animations ──────────────────────────────────────────────── */
+/* --------------------------------------------------------------------------
+   7. KEYFRAME ANIMATIONS
+   -------------------------------------------------------------------------- */
+
+/* Fade in upward (entrance animation) */
 @keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-
 .animate-fade-in-up {
   animation: fade-in-up 0.6s ease-out forwards;
 }
 
+/* CRT scanline sweep */
 @keyframes scanline {
-  0% { transform: translateY(-100%); }
+  0%   { transform: translateY(-100%); }
   100% { transform: translateY(100%); }
 }
-
 .animate-scanline {
   animation: scanline 8s linear infinite;
 }
 
+/* Terminal cursor blink */
 @keyframes blink {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  50%      { opacity: 0; }
 }
-
 .animate-blink {
   animation: blink 1s step-end infinite;
 }
 
+/* Vertical marquee scroll */
 @keyframes marquee-y {
   from { transform: translateY(0); }
-  to { transform: translateY(-50%); }
+  to   { transform: translateY(-50%); }
 }
-
 .animate-marquee-y {
-  /* We use -50% translation so it requires the content to be duplicated naturally or tall enough to loop seamlessly */
   animation: marquee-y 30s linear infinite;
 }
 
+/* Pulsing glow (box-shadow) */
 @keyframes pulse-glow {
   0%, 100% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); }
-  50% { box-shadow: 0 0 25px rgba(255, 255, 255, 0.8); }
+  50%      { box-shadow: 0 0 25px rgba(255, 255, 255, 0.8); }
 }
-
 .animate-pulse-glow {
   animation: pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+/* Pulsing border */
 @keyframes pulse-border {
   0%, 100% { border-color: rgba(255, 255, 255, 0.3); }
-  50% { border-color: rgba(255, 255, 255, 0.8); }
+  50%      { border-color: rgba(255, 255, 255, 0.8); }
 }
-
 .animate-pulse-border {
   animation: pulse-border 3s ease-in-out infinite;
 }

@@ -8,6 +8,14 @@ export const ThemeContext = createContext({
 
 const STORAGE_KEY = 'csc-theme-preference';
 
+/**
+ * Providers the Theme state (dark/light) to the entire application.
+ * Persists the user's choice to localStorage and automatically updates the
+ * internal state if the user changes their OS preferences.
+ * 
+ * @param {Object} props
+ * @param {React.ReactNode} props.children - Child components to be wrapped by the context.
+ */
 export function ThemeProvider({ children }) {
   const [theme, setThemeState] = useState(() => {
     // 1. Check localStorage for saved preference
@@ -23,7 +31,10 @@ export function ThemeProvider({ children }) {
     return 'dark';
   });
 
-  // Apply theme class to <html> element
+  /**
+   * Side-effect: Sync the 'dark' utility class to the HTML root element.
+   * Tailwind uses `html.dark` or `html:not(.dark)` for styling conditionals.
+   */
   useEffect(() => {
     const root = document.documentElement;
     if (theme === 'dark') {
