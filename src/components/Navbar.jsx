@@ -73,7 +73,10 @@ export default function Navbar() {
         {/* Actions Container */}
         <div className="flex items-center gap-10" style={{ marginRight: '4vw' }}>
           
-          <button
+          <a
+            href="https://discord.gg/tTnSqwCWH7"
+            target="_blank"
+            rel="noopener noreferrer"
             className={cx(
               'hidden md:flex items-center justify-center',
               "font-['Inter'] tracking-widest uppercase text-[12px] font-bold",
@@ -85,7 +88,7 @@ export default function Navbar() {
             )}
           >
             Connect
-          </button>
+          </a>
 
           <button
             onClick={toggleTheme}
