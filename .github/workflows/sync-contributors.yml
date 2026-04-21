@@ -1,0 +1,53 @@
+name: Sync GitHub Contributors
+
+on:
+  schedule:
+    # Nightly at 06:00 UTC (midnight Central Time during standard time)
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/sync-contributors.yml"
+      - "scripts/sync-contributors.mjs"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "sync-contributors"
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run contributor sync
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/sync-contributors.mjs
+
+      - name: Commit updated contributors.json (if changed)
+        run: |
+          # Use `git status --porcelain` rather than `git diff --quiet` here:
+          # `git diff` ignores untracked files, so on a bootstrap run where
+          # contributors.json isn't yet in the index, a freshly generated
+          # file would be reported as "no change" and never committed.
+          # `git status --porcelain` reports untracked (??) AND modified ( M).
+          if [ -z "$(git status --porcelain -- src/data/contributors.json)" ]; then
+            echo "No contributor changes. Skipping commit."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/contributors.json
+          git commit -m "chore(data): sync contributors.json [skip ci]"
+          git push

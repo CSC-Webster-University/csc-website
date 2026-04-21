@@ -1,9 +1,23 @@
 name: Deploy to GitHub Pages
 
+# Why `workflow_run` is here:
+#   The contributor-sync workflow commits contributors.json using the default
+#   GITHUB_TOKEN. GitHub Actions intentionally does NOT re-trigger `push`
+#   workflows from GITHUB_TOKEN commits (to prevent recursion), and the
+#   `[skip ci]` tag on that commit would block push triggers anyway. So a
+#   refreshed contributors.json would never reach production.
+#
+#   `workflow_run` runs after another workflow finishes, is unaffected by
+#   `[skip ci]`, and is unaffected by the GITHUB_TOKEN-recursion rule — so
+#   it's the correct way to chain Pages deploys onto contributor syncs.
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Sync GitHub Contributors"]
+    types: [completed]
+    branches: ["main"]
 
 permissions:
   contents: read
@@ -17,16 +31,27 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # For workflow_run triggers, only proceed when the upstream run succeeded.
+    # For push / workflow_dispatch, `workflow_run` is null and this is truthy.
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # When triggered by `workflow_run`, the default GITHUB_SHA is the
+          # commit that started the upstream run — not the commit it created.
+          # Explicitly pull the branch head so we always build the latest
+          # contributors.json written by the sync workflow.
+          ref: ${{ github.event.workflow_run.head_branch || github.ref }}
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
       - name: Install dependencies
-        run: npm install
+        # `npm ci` (not `install`) so the lockfile is the source of truth and
+        # CI builds are reproducible. Requires package-lock.json to be committed.
+        run: npm ci
       - name: Build
         run: npm run build
       - name: Setup Pages
